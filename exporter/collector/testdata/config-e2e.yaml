@@ -1,0 +1,28 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: localhost:4317
+exporters:
+  googlecloud:
+    # PROJECT_ID may be passed in this envvar, or you can leave it blank to for
+    # autodiscovery of the project.
+    project: "${PROJECT_ID}"
+  logging:
+    loglevel: debug
+processors:
+  memory_limiter:
+    check_interval: 1s
+    limit_mib: 4000
+    spike_limit_mib: 800
+  batch:
+service:
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [googlecloud, logging]
+    metrics:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [googlecloud, logging]

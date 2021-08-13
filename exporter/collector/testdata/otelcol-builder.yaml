@@ -1,0 +1,4 @@
+dist:
+  output_path: ./
+exporters:
+  - gomod: "github.com/open-telemetry/opentelemetry-collector-contrib/exporter/googlecloudexporter v0.31.0"
