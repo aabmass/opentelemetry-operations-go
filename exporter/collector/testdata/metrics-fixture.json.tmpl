@@ -1,0 +1,47 @@
+{
+  "resourceMetrics": [
+    {
+      "resource": {},
+      "instrumentationLibraryMetrics": [
+        {
+          "instrumentationLibrary": {},
+          "metrics": [
+            {
+              "name": "e2e.request_count",
+              "description": "Count of requests",
+              "unit": "s",
+              "sum": {
+                "dataPoints": [
+                  {
+                    "labels": [
+                      {
+                        "key": "http.path",
+                        "value": "/mypath"
+                      }
+                    ],
+                    "startTimeUnixNano": "{{.StartTimeUnixNano}}",
+                    "timeUnixNano": "{{.TimeUnixNano}}",
+                    "asInt": 250
+                  },
+                  {
+                    "labels": [
+                      {
+                        "key": "http.path",
+                        "value": "/otherPath"
+                      }
+                    ],
+                    "startTimeUnixNano": "{{.StartTimeUnixNano}}",
+                    "timeUnixNano": "{{.TimeUnixNano}}",
+                    "asInt": 125
+                  }
+                ],
+                "aggregationTemporality": "AGGREGATION_TEMPORALITY_CUMULATIVE",
+                "isMonotonic": true
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

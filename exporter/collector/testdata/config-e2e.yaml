@@ -1,8 +1,8 @@
 receivers:
   otlp:
     protocols:
-      grpc:
-        endpoint: localhost:4317
+      http:
+        endpoint: localhost:4318
 exporters:
   googlecloud:
     # PROJECT_ID may be passed in this envvar, or you can leave it blank to for
@@ -16,6 +16,7 @@ processors:
     limit_mib: 4000
     spike_limit_mib: 800
   batch:
+    # send_batch_size: 1
 service:
   pipelines:
     traces:
