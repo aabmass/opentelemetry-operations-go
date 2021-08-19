@@ -3,6 +3,7 @@ module github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/colle
 go 1.14
 
 require (
+	cloud.google.com/go v0.88.0
 	contrib.go.opencensus.io/exporter/stackdriver v0.13.8
 	github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/trace v1.0.0-RC2
 	github.com/census-instrumentation/opencensus-proto v0.3.0

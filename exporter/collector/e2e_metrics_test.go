@@ -15,15 +15,23 @@
 package googlecloudexporter_test
 
 import (
+	"context"
+	"fmt"
 	"io"
 	"net/http"
+	"os"
 	"path"
 	"strings"
 	"testing"
 	"text/template"
 	"time"
 
+	monitoring "cloud.google.com/go/monitoring/apiv3/v2"
+	monitoringpb "google.golang.org/genproto/googleapis/monitoring/v3"
+	"google.golang.org/protobuf/types/known/timestamppb"
+
 	"github.com/GoogleCloudPlatform/opentelemetry-operations-go/exporter/collector/internal/e2ecollector"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -34,6 +42,8 @@ type metricsVars struct {
 
 func TestE2eMetrics(t *testing.T) {
 	t.Parallel()
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*15)
+	defer cancel()
 	t.Logf("Going to start collector")
 	shutdownCollector, err := e2ecollector.OtelColMain()
 	require.NoError(t, err)
@@ -52,6 +62,36 @@ func TestE2eMetrics(t *testing.T) {
 	t.Logf("Going to stop collector")
 	shutdownCollector()
 	t.Logf("Collector stopped")
+
+	assertMetrics(ctx, t, assertMetricsParams{
+		StartTime: startTime, EndTime: endTime, MetricName: "e2e.request_count",
+	})
+}
+
+type assertMetricsParams struct {
+	StartTime  time.Time
+	EndTime    time.Time
+	MetricName string
+}
+
+func assertMetrics(ctx context.Context, t *testing.T, params assertMetricsParams) {
+	client, err := monitoring.NewMetricClient(ctx)
+	require.NoError(t, err)
+
+	res, err := client.ListTimeSeries(ctx, &monitoringpb.ListTimeSeriesRequest{
+		Name: fmt.Sprintf("projects/%v", os.Getenv("PROJECT_ID")),
+		Filter: fmt.Sprintf(
+			`metric.type = "custom.googleapis.com/opencensus/%v"`, params.MetricName,
+		),
+		Interval: &monitoringpb.TimeInterval{
+			StartTime: timestamppb.New(params.StartTime.Add(-time.Minute)),
+			EndTime:   timestamppb.New(params.EndTime.Add(time.Second)),
+		},
+		PageSize: 1,
+	}).Next()
+	require.NoError(t, err)
+	assert.Len(t, res.Points, 1)
+	t.Logf(res.String())
 }
 
 func loadFixture(t *testing.T, fixturePath string, data interface{}) string {
