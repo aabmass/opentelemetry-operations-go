@@ -1,0 +1,59 @@
+{
+  "timeSeries":  [
+    {
+      "metric":  {
+        "type":  "custom.googleapis.com/opencensus/e2e.request_count",
+        "labels":  {
+          "http_path":  "/mypath"
+        }
+      },
+      "resource":  {
+        "type":  "global",
+        "labels":  {
+          "project_id":  "otel-starter-project"
+        }
+      },
+      "metricKind":  "CUMULATIVE",
+      "valueType":  "INT64",
+      "points":  [
+        {
+          "interval":  {
+            "endTime":  "2021-08-23T23:22:35.965751Z",
+            "startTime":  "2021-08-23T23:22:34.965751Z"
+          },
+          "value":  {
+            "int64Value":  "250"
+          }
+        }
+      ]
+    },
+    {
+      "metric":  {
+        "type":  "custom.googleapis.com/opencensus/e2e.request_count",
+        "labels":  {
+          "http_path":  "/otherPath"
+        }
+      },
+      "resource":  {
+        "type":  "global",
+        "labels":  {
+          "project_id":  "otel-starter-project"
+        }
+      },
+      "metricKind":  "CUMULATIVE",
+      "valueType":  "INT64",
+      "points":  [
+        {
+          "interval":  {
+            "endTime":  "2021-08-23T23:22:35.965751Z",
+            "startTime":  "2021-08-23T23:22:34.965751Z"
+          },
+          "value":  {
+            "int64Value":  "125"
+          }
+        }
+      ]
+    }
+  ],
+  "unit":  "s"
+}
