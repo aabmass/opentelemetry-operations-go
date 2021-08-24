@@ -15,16 +15,15 @@
 package googlecloudexporter_test
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
-	"path"
-	"strings"
 	"testing"
-	"text/template"
 	"time"
 
 	monitoring "cloud.google.com/go/monitoring/apiv3/v2"
@@ -40,11 +39,6 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-type metricsVars struct {
-	StartTimeUnixNano int64
-	TimeUnixNano      int64
-}
-
 func TestE2eMetrics(t *testing.T) {
 	t.Parallel()
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*15)
@@ -57,11 +51,8 @@ func TestE2eMetrics(t *testing.T) {
 	endTime := time.Now()
 	startTime := endTime.Add(-time.Second)
 
-	metricsJson := loadFixture(t, "testdata/metrics-fixture.json.tmpl", metricsVars{
-		StartTimeUnixNano: startTime.UnixNano(),
-		TimeUnixNano:      endTime.UnixNano(),
-	})
-	sendMetricsJsonToCollector(t, metricsJson)
+	metricsJsonBytes := loadOTLPMetricsFixture(t, "testdata/metrics-fixture.json", startTime, endTime)
+	sendMetricsJsonToCollector(t, metricsJsonBytes)
 	time.Sleep(time.Second * 5)
 
 	t.Logf("Going to stop collector")
@@ -118,13 +109,34 @@ func assertMetrics(ctx context.Context, t *testing.T, params assertMetricsParams
 	assert.Emptyf(t, diff, "Expected GCM response and actual GCM response differ:\n%v", diff)
 }
 
-func loadFixture(t *testing.T, fixturePath string, data interface{}) string {
-	baseName := path.Base(fixturePath)
-	tmpl := template.Must(template.New(baseName).ParseFiles(fixturePath))
-	builder := strings.Builder{}
-	err := tmpl.Execute(&builder, data)
+func loadOTLPMetricsFixture(t *testing.T, fixturePath string, startTime time.Time, endTime time.Time) []byte {
+	bytes, err := ioutil.ReadFile(fixturePath)
 	require.NoError(t, err)
-	return builder.String()
+	metricsMap := map[string]interface{}{}
+	require.NoError(t, json.Unmarshal(bytes, &metricsMap))
+
+	// Update timestamps from the fixture
+	for _, rm := range metricsMap["resourceMetrics"].([]interface{}) {
+		for _, ilm := range rm.(map[string]interface{})["instrumentationLibraryMetrics"].([]interface{}) {
+			for _, m := range ilm.(map[string]interface{})["metrics"].([]interface{}) {
+				mMap := m.(map[string]interface{})
+
+				// Coalesce with other potential data aggregations like histogram, gauge, ...
+				aggregation := mMap["sum"]
+
+				for _, dp := range aggregation.(map[string]interface{})["dataPoints"].([]interface{}) {
+					dp := dp.(map[string]interface{})
+					dp["startTimeUnixNano"] = startTime.UnixNano()
+					dp["timeUnixNano"] = endTime.UnixNano()
+				}
+			}
+		}
+	}
+
+	require.NoError(t, err)
+	updatedBytes, err := json.Marshal(metricsMap)
+	require.NoError(t, err)
+	return updatedBytes
 }
 
 func loadExpectationFixture(t *testing.T, fixturePath string, loadInto proto.Message) {
@@ -133,8 +145,8 @@ func loadExpectationFixture(t *testing.T, fixturePath string, loadInto proto.Mes
 	require.NoError(t, protojson.Unmarshal(bytes, loadInto))
 }
 
-func sendMetricsJsonToCollector(t *testing.T, json string) {
-	res, err := http.Post("http://localhost:4318/v1/metrics", "application/json", strings.NewReader(json))
+func sendMetricsJsonToCollector(t *testing.T, json []byte) {
+	res, err := http.Post("http://localhost:4318/v1/metrics", "application/json", bytes.NewReader(json))
 	require.NoError(t, err)
 	defer res.Body.Close()
 	bytes, err := io.ReadAll(res.Body)

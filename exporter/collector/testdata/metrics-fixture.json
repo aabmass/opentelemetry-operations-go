@@ -19,8 +19,8 @@
                         "value": "/mypath"
                       }
                     ],
-                    "startTimeUnixNano": "{{.StartTimeUnixNano}}",
-                    "timeUnixNano": "{{.TimeUnixNano}}",
+                    "startTimeUnixNano": "",
+                    "timeUnixNano": "",
                     "asInt": 250
                   },
                   {
@@ -30,8 +30,8 @@
                         "value": "/otherPath"
                       }
                     ],
-                    "startTimeUnixNano": "{{.StartTimeUnixNano}}",
-                    "timeUnixNano": "{{.TimeUnixNano}}",
+                    "startTimeUnixNano": "",
+                    "timeUnixNano": "",
                     "asInt": 125
                   }
                 ],
