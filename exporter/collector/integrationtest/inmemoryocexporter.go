@@ -158,10 +158,12 @@ func NewMetricTestExporter(
 	cfg.MetricConfig.ClientConfig.Endpoint = m.Endpoint
 	cfg.MetricConfig.ClientConfig.UseInsecure = true
 
+	logger, err := zap.NewDevelopment()
+	require.NoError(t, err)
 	exporter, err := collector.NewGoogleCloudMetricsExporter(
 		ctx,
 		cfg,
-		zap.NewNop(),
+		logger,
 		"latest",
 		collector.DefaultTimeout,
 	)

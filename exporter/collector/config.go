@@ -100,6 +100,9 @@ type MetricConfig struct {
 	// exporter. It allows overriding the function used to map otel resource to
 	// monitored resource.
 	MapMonitoredResource func(pcommon.Resource) *monitoredrespb.MonitoredResource
+	// MapMonitoredResourceStarlark accepts a starlark script which will be used to map the
+	// OpenTelemetry resource in a metric batch to a Cloud Monitoring MonitoredResource
+	MapMonitoredResourceStarlark string `mapstructure:"map_monitored_resource_starlark"`
 	// ExtraMetrics is an extension point for exporters to add to the set
 	// of ResourceMetrics during a call to PushMetrics.
 	ExtraMetrics func(pmetric.Metrics) pmetric.ResourceMetricsSlice

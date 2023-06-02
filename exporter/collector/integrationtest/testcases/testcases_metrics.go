@@ -36,6 +36,19 @@ var MetricsTestCases = []TestCase{
 		},
 	},
 	{
+		Name:                 "Basic Counter starlark resource mapping",
+		OTLPInputFixturePath: "testdata/fixtures/metrics/basic_counter_metrics.json",
+		ExpectFixturePath:    "testdata/fixtures/metrics/basic_counter_metrics_starlark_expect.json",
+		SkipForSDK:           true,
+		ConfigureCollector: func(cfg *collector.Config) {
+			cfg.MetricConfig.MapMonitoredResourceStarlark = `
+# type: Callable[[dict[str, str]], MonitoredResource]
+def map_resource(resource):
+	return MonitoredResource(type="foo" * 5, labels={"foo": "bar"})
+`
+		},
+	},
+	{
 		Name:                 "Basic Counter with not found return code",
 		OTLPInputFixturePath: "testdata/fixtures/metrics/basic_counter_metrics.json",
 		ExpectFixturePath:    "testdata/fixtures/metrics/basic_counter_metrics_notfound_expect.json",

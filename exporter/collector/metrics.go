@@ -77,8 +77,9 @@ type MetricsExporter struct {
 	mapper      metricMapper
 	cfg         Config
 	// goroutines tracks the currently running child tasks
-	goroutines sync.WaitGroup
-	timeout    time.Duration
+	goroutines           sync.WaitGroup
+	timeout              time.Duration
+	mapMonitoredResource func(resource pcommon.Resource) *monitoredrespb.MonitoredResource
 }
 
 // requestInfo is meant to abstract info from CreateMetricsDescriptorRequests and
@@ -178,10 +179,21 @@ func NewGoogleCloudMetricsExporter(
 		// MetricDescritpors are asychronously sent and optimistic.
 		// We only get Unit/Description/Display name from them, so it's ok
 		// to drop / conserve resources for sending timeseries.
-		metricDescriptorC: make(chan *monitoringpb.CreateMetricDescriptorRequest, cfg.MetricConfig.CreateMetricDescriptorBufferSize),
-		mdCache:           make(map[string]*monitoringpb.CreateMetricDescriptorRequest),
-		shutdownC:         shutdown,
-		timeout:           timeout,
+		metricDescriptorC:    make(chan *monitoringpb.CreateMetricDescriptorRequest, cfg.MetricConfig.CreateMetricDescriptorBufferSize),
+		mdCache:              make(map[string]*monitoringpb.CreateMetricDescriptorRequest),
+		shutdownC:            shutdown,
+		timeout:              timeout,
+		mapMonitoredResource: cfg.MetricConfig.MapMonitoredResource,
+	}
+
+	if cfg.MetricConfig.MapMonitoredResourceStarlark != "" {
+		mExp.mapMonitoredResource, err = makeStarlarkResourceToMonitoredResource(
+			cfg.MetricConfig.MapMonitoredResourceStarlark,
+			obs.log,
+		)
+		if err != nil {
+			return nil, err
+		}
 	}
 
 	mExp.requestOpts = make([]func(*context.Context, requestInfo), 0)
@@ -215,7 +227,7 @@ func (me *MetricsExporter) PushMetrics(ctx context.Context, m pmetric.Metrics) e
 
 	for i := 0; i < rms.Len(); i++ {
 		rm := rms.At(i)
-		monitoredResource := me.cfg.MetricConfig.MapMonitoredResource(rm.Resource())
+		monitoredResource := me.mapMonitoredResource(rm.Resource())
 		extraResourceLabels := resourceToLabels(rm.Resource(), me.cfg.MetricConfig.ServiceResourceLabels, me.cfg.MetricConfig.ResourceFilters, me.obs.log)
 		projectID := me.cfg.ProjectID
 		// override project ID with gcp.project.id, if present
