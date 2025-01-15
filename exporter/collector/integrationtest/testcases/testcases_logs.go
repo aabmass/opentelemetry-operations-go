@@ -96,4 +96,12 @@ var LogsTestCases = []TestCase{
 			cfg.UserAgent = "custom-user-agent {{version}}"
 		},
 	},
+	{
+		Name:                 "GenAI chat completion",
+		OTLPInputFixturePath: "testdata/fixtures/logs/logs_gen_ai_chat_completion.json",
+		ExpectFixturePath:    "testdata/fixtures/logs/logs_gen_ai_chat_completion_expected.json",
+		ConfigureCollector: func(cfg *collector.Config) {
+			cfg.LogConfig.DefaultLogName = "my-log-name-foo"
+		},
+	},
 }

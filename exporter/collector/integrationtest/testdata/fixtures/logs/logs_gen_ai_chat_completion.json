@@ -1,0 +1,577 @@
+{
+  "resourceLogs": [
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "python"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.30.0.dev0"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "unknown_service"
+            }
+          }
+        ]
+      },
+      "scopeLogs": [
+        {
+          "scope": {
+            "name": "opentelemetry.instrumentation.openai_v2"
+          },
+          "logRecords": [
+            {
+              "timeUnixNano": "1736976310997977393",
+              "severityNumber": "SEVERITY_NUMBER_INFO",
+              "body": {
+                "kvlistValue": {
+                  "values": [
+                    {
+                      "key": "content",
+                      "value": {
+                        "stringValue": "You're a helpful assistant."
+                      }
+                    }
+                  ]
+                }
+              },
+              "attributes": [
+                {
+                  "key": "gen_ai.system",
+                  "value": {
+                    "stringValue": "openai"
+                  }
+                },
+                {
+                  "key": "event.name",
+                  "value": {
+                    "stringValue": "gen_ai.system.message"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "979d0f40bf171179189e3042340f4c7f",
+              "spanId": "4582ce395b4d47a3",
+              "observedTimeUnixNano": "1736976310997998813"
+            },
+            {
+              "timeUnixNano": "1736976310998031793",
+              "severityNumber": "SEVERITY_NUMBER_INFO",
+              "body": {
+                "kvlistValue": {
+                  "values": [
+                    {
+                      "key": "content",
+                      "value": {
+                        "stringValue": "What's the weather in Seattle and San Francisco today?"
+                      }
+                    }
+                  ]
+                }
+              },
+              "attributes": [
+                {
+                  "key": "gen_ai.system",
+                  "value": {
+                    "stringValue": "openai"
+                  }
+                },
+                {
+                  "key": "event.name",
+                  "value": {
+                    "stringValue": "gen_ai.user.message"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "979d0f40bf171179189e3042340f4c7f",
+              "spanId": "4582ce395b4d47a3",
+              "observedTimeUnixNano": "1736976310998040813"
+            },
+            {
+              "timeUnixNano": "1736976311021579762",
+              "severityNumber": "SEVERITY_NUMBER_INFO",
+              "body": {
+                "kvlistValue": {
+                  "values": [
+                    {
+                      "key": "index",
+                      "value": {
+                        "intValue": "0"
+                      }
+                    },
+                    {
+                      "key": "finish_reason",
+                      "value": {
+                        "stringValue": "tool_calls"
+                      }
+                    },
+                    {
+                      "key": "message",
+                      "value": {
+                        "kvlistValue": {
+                          "values": [
+                            {
+                              "key": "role",
+                              "value": {
+                                "stringValue": "assistant"
+                              }
+                            },
+                            {
+                              "key": "tool_calls",
+                              "value": {
+                                "arrayValue": {
+                                  "values": [
+                                    {
+                                      "kvlistValue": {
+                                        "values": [
+                                          {
+                                            "key": "id",
+                                            "value": {
+                                              "stringValue": "call_JpNb8OiAkbIbHzDggfpdDHpi"
+                                            }
+                                          },
+                                          {
+                                            "key": "type",
+                                            "value": {
+                                              "stringValue": "function"
+                                            }
+                                          },
+                                          {
+                                            "key": "function",
+                                            "value": {
+                                              "kvlistValue": {
+                                                "values": [
+                                                  {
+                                                    "key": "name",
+                                                    "value": {
+                                                      "stringValue": "get_current_weather"
+                                                    }
+                                                  },
+                                                  {
+                                                    "key": "arguments",
+                                                    "value": {
+                                                      "stringValue": "{\"location\": \"Seattle, WA\"}"
+                                                    }
+                                                  }
+                                                ]
+                                              }
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      "kvlistValue": {
+                                        "values": [
+                                          {
+                                            "key": "id",
+                                            "value": {
+                                              "stringValue": "call_vaFQc3zK6hHTRZKXRI5Eo2cJ"
+                                            }
+                                          },
+                                          {
+                                            "key": "type",
+                                            "value": {
+                                              "stringValue": "function"
+                                            }
+                                          },
+                                          {
+                                            "key": "function",
+                                            "value": {
+                                              "kvlistValue": {
+                                                "values": [
+                                                  {
+                                                    "key": "name",
+                                                    "value": {
+                                                      "stringValue": "get_current_weather"
+                                                    }
+                                                  },
+                                                  {
+                                                    "key": "arguments",
+                                                    "value": {
+                                                      "stringValue": "{\"location\": \"San Francisco, CA\"}"
+                                                    }
+                                                  }
+                                                ]
+                                              }
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "attributes": [
+                {
+                  "key": "gen_ai.system",
+                  "value": {
+                    "stringValue": "openai"
+                  }
+                },
+                {
+                  "key": "event.name",
+                  "value": {
+                    "stringValue": "gen_ai.choice"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "979d0f40bf171179189e3042340f4c7f",
+              "spanId": "4582ce395b4d47a3",
+              "observedTimeUnixNano": "1736976311021598711"
+            },
+            {
+              "timeUnixNano": "1736976311023766451",
+              "severityNumber": "SEVERITY_NUMBER_INFO",
+              "body": {
+                "kvlistValue": {
+                  "values": [
+                    {
+                      "key": "content",
+                      "value": {
+                        "stringValue": "You're a helpful assistant."
+                      }
+                    }
+                  ]
+                }
+              },
+              "attributes": [
+                {
+                  "key": "gen_ai.system",
+                  "value": {
+                    "stringValue": "openai"
+                  }
+                },
+                {
+                  "key": "event.name",
+                  "value": {
+                    "stringValue": "gen_ai.system.message"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "979d0f40bf171179189e3042340f4c7f",
+              "spanId": "4582ce395b4d47a3",
+              "observedTimeUnixNano": "1736976311023778011"
+            },
+            {
+              "timeUnixNano": "1736976311023793442",
+              "severityNumber": "SEVERITY_NUMBER_INFO",
+              "body": {
+                "kvlistValue": {
+                  "values": [
+                    {
+                      "key": "content",
+                      "value": {
+                        "stringValue": "What's the weather in Seattle and San Francisco today?"
+                      }
+                    }
+                  ]
+                }
+              },
+              "attributes": [
+                {
+                  "key": "gen_ai.system",
+                  "value": {
+                    "stringValue": "openai"
+                  }
+                },
+                {
+                  "key": "event.name",
+                  "value": {
+                    "stringValue": "gen_ai.user.message"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "979d0f40bf171179189e3042340f4c7f",
+              "spanId": "4582ce395b4d47a3",
+              "observedTimeUnixNano": "1736976311023800151"
+            },
+            {
+              "timeUnixNano": "1736976311023812862",
+              "severityNumber": "SEVERITY_NUMBER_INFO",
+              "body": {
+                "kvlistValue": {
+                  "values": [
+                    {
+                      "key": "tool_calls",
+                      "value": {
+                        "arrayValue": {
+                          "values": [
+                            {
+                              "kvlistValue": {
+                                "values": [
+                                  {
+                                    "key": "id",
+                                    "value": {
+                                      "stringValue": "call_JpNb8OiAkbIbHzDggfpdDHpi"
+                                    }
+                                  },
+                                  {
+                                    "key": "type",
+                                    "value": {
+                                      "stringValue": "function"
+                                    }
+                                  },
+                                  {
+                                    "key": "function",
+                                    "value": {
+                                      "kvlistValue": {
+                                        "values": [
+                                          {
+                                            "key": "name",
+                                            "value": {
+                                              "stringValue": "get_current_weather"
+                                            }
+                                          },
+                                          {
+                                            "key": "arguments",
+                                            "value": {
+                                              "stringValue": "{\"location\": \"Seattle, WA\"}"
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            {
+                              "kvlistValue": {
+                                "values": [
+                                  {
+                                    "key": "id",
+                                    "value": {
+                                      "stringValue": "call_vaFQc3zK6hHTRZKXRI5Eo2cJ"
+                                    }
+                                  },
+                                  {
+                                    "key": "type",
+                                    "value": {
+                                      "stringValue": "function"
+                                    }
+                                  },
+                                  {
+                                    "key": "function",
+                                    "value": {
+                                      "kvlistValue": {
+                                        "values": [
+                                          {
+                                            "key": "name",
+                                            "value": {
+                                              "stringValue": "get_current_weather"
+                                            }
+                                          },
+                                          {
+                                            "key": "arguments",
+                                            "value": {
+                                              "stringValue": "{\"location\": \"San Francisco, CA\"}"
+                                            }
+                                          }
+                                        ]
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "attributes": [
+                {
+                  "key": "gen_ai.system",
+                  "value": {
+                    "stringValue": "openai"
+                  }
+                },
+                {
+                  "key": "event.name",
+                  "value": {
+                    "stringValue": "gen_ai.assistant.message"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "979d0f40bf171179189e3042340f4c7f",
+              "spanId": "4582ce395b4d47a3",
+              "observedTimeUnixNano": "1736976311023818942"
+            },
+            {
+              "timeUnixNano": "1736976311023827342",
+              "severityNumber": "SEVERITY_NUMBER_INFO",
+              "body": {
+                "kvlistValue": {
+                  "values": [
+                    {
+                      "key": "content",
+                      "value": {
+                        "stringValue": "50 degrees and raining"
+                      }
+                    },
+                    {
+                      "key": "id",
+                      "value": {
+                        "stringValue": "call_JpNb8OiAkbIbHzDggfpdDHpi"
+                      }
+                    }
+                  ]
+                }
+              },
+              "attributes": [
+                {
+                  "key": "gen_ai.system",
+                  "value": {
+                    "stringValue": "openai"
+                  }
+                },
+                {
+                  "key": "event.name",
+                  "value": {
+                    "stringValue": "gen_ai.tool.message"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "979d0f40bf171179189e3042340f4c7f",
+              "spanId": "4582ce395b4d47a3",
+              "observedTimeUnixNano": "1736976311023832751"
+            },
+            {
+              "timeUnixNano": "1736976311023839502",
+              "severityNumber": "SEVERITY_NUMBER_INFO",
+              "body": {
+                "kvlistValue": {
+                  "values": [
+                    {
+                      "key": "content",
+                      "value": {
+                        "stringValue": "70 degrees and sunny"
+                      }
+                    },
+                    {
+                      "key": "id",
+                      "value": {
+                        "stringValue": "call_vaFQc3zK6hHTRZKXRI5Eo2cJ"
+                      }
+                    }
+                  ]
+                }
+              },
+              "attributes": [
+                {
+                  "key": "gen_ai.system",
+                  "value": {
+                    "stringValue": "openai"
+                  }
+                },
+                {
+                  "key": "event.name",
+                  "value": {
+                    "stringValue": "gen_ai.tool.message"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "979d0f40bf171179189e3042340f4c7f",
+              "spanId": "4582ce395b4d47a3",
+              "observedTimeUnixNano": "1736976311023844191"
+            },
+            {
+              "timeUnixNano": "1736976311034587191",
+              "severityNumber": "SEVERITY_NUMBER_INFO",
+              "body": {
+                "kvlistValue": {
+                  "values": [
+                    {
+                      "key": "index",
+                      "value": {
+                        "intValue": "0"
+                      }
+                    },
+                    {
+                      "key": "finish_reason",
+                      "value": {
+                        "stringValue": "stop"
+                      }
+                    },
+                    {
+                      "key": "message",
+                      "value": {
+                        "kvlistValue": {
+                          "values": [
+                            {
+                              "key": "role",
+                              "value": {
+                                "stringValue": "assistant"
+                              }
+                            },
+                            {
+                              "key": "content",
+                              "value": {
+                                "stringValue": "Today, the weather in Seattle is 50 degrees and raining, while in San Francisco, it's 70 degrees and sunny."
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "attributes": [
+                {
+                  "key": "gen_ai.system",
+                  "value": {
+                    "stringValue": "openai"
+                  }
+                },
+                {
+                  "key": "event.name",
+                  "value": {
+                    "stringValue": "gen_ai.choice"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "979d0f40bf171179189e3042340f4c7f",
+              "spanId": "4582ce395b4d47a3",
+              "observedTimeUnixNano": "1736976311034598441"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

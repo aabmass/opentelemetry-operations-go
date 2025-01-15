@@ -30,4 +30,9 @@ var TracesTestCases = []TestCase{
 			cfg.UserAgent = "custom-user-agent {{version}}"
 		},
 	},
+	{
+		Name:                 "GenAI chat completion",
+		OTLPInputFixturePath: "testdata/fixtures/traces/traces_gen_ai_chat_completion.json",
+		ExpectFixturePath:    "testdata/fixtures/traces/traces_gen_ai_chat_completion_expected.json",
+	},
 }
